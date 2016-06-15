@@ -1,0 +1,81 @@
+<resources>
+    <string name="app_name">ProvoCraft Code Challenge</string>
+    <string name="enter_a_city_to_search">Enter a city to search…</string>
+    <string name="current_conditions">Current Conditions:</string>
+    <string name="currently">Currently:</string>
+    <string name="_7_day_forecast">7 Day Forecast</string>
+    <string name="visibility">Visibility:</string>
+    <string name="rising">Rising:</string>
+    <string name="pressure">Pressure:</string>
+    <string name="atmosphere">Atmosphere:</string>
+    <string name="humidity">Humidity:</string>
+    <string name="direction">Direction:</string>
+    <string name="wind">Wind:</string>
+    <string name="chill">Chill:</string>
+    <string name="speed">Speed:</string>
+    <string name="weather_conditions">weather conditions</string>
+    <string name="astronomy">Astronomy:</string>
+    <string name="sunset">Sunset:</string>
+    <string name="sunrise">Sunrise:</string>
+
+    <string-array name="sunny">
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>17</item>
+        <item>36</item>
+    </string-array>
+
+    <string-array name="cloudy">
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="rainy">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>35</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>4	</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+    </string-array>
+
+    <string-array name="snowy">
+        <item>7</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+    </string-array>
+
+</resources>

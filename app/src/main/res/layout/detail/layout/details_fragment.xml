@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clickable="true">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header"/>
+
+    <TextView
+        android:id="@+id/current"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:text="@string/current_conditions" />
+
+    <LinearLayout
+        android:id="@+id/currentStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/current"
+        android:orientation="horizontal">
+
+        <include layout="@layout/wind" />
+
+        <include layout="@layout/atmosphere" />
+
+        <include layout="@layout/astronomy" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/forecastHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/currentStats"
+        android:text="@string/_7_day_forecast" />
+
+    <LinearLayout
+        android:id="@+id/forecast"
+        android:layout_below="@id/forecastHeader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
+</RelativeLayout>
