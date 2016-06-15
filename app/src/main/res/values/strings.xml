@@ -17,6 +17,10 @@
     <string name="astronomy">Astronomy:</string>
     <string name="sunset">Sunset:</string>
     <string name="sunrise">Sunrise:</string>
+    <string name="wind_for_real">Wind</string>
+    <string name="atmos">Atmosphere</string>
+    <string name="astro">Astronomy</string>
+    <string name="no_results_try_again">No Results, Try Again</string>
 
     <string-array name="sunny">
         <item>32</item>

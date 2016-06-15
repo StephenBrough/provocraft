@@ -12,7 +12,7 @@
 
         <TextView
             style="@style/currentConditionHeader"
-            android:text="@string/wind" />
+            android:text="@string/wind_for_real" />
 
         <LinearLayout
             android:layout_width="match_parent"

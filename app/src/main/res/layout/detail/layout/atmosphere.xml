@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/currentConditionHeader"
-            android:text="@string/atmosphere" />
+            android:text="@string/atmos" />
 
         <LinearLayout
             android:layout_width="match_parent"

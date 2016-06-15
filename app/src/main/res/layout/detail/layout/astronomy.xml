@@ -15,11 +15,11 @@
 
         <TextView
             style="@style/currentConditionHeader"
-            android:text="@string/astronomy" />
+            android:text="@string/astro" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/currentConditionLabel"

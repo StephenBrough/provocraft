@@ -10,7 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blotcoo.provocraftcodechallenge.R;
@@ -39,11 +40,15 @@ public class HomeFragment extends Fragment implements SearchResultsAdapter.OnRes
     @BindView(R.id.searchResults)
     RecyclerView searchResults;
 
-    @BindView(R.id.content)
-    FrameLayout content;
+    @BindView(R.id.progress)
+    ProgressBar progress;
+
+    @BindView(R.id.noResults)
+    TextView noResults;
 
     Subscription searchObservable;
     HomeContract.Presenter presenter;
+    FragmentSansFrontieres frag;
 
     @Nullable
     @Override
@@ -51,17 +56,31 @@ public class HomeFragment extends Fragment implements SearchResultsAdapter.OnRes
         View v = inflater.inflate(R.layout.home_fragment, container, false);
         ButterKnife.bind(this, v);
 
-        FragmentSansFrontieres frag = (FragmentSansFrontieres) getActivity().getSupportFragmentManager().findFragmentByTag(FragmentSansFrontieres.TAG);
+        frag = (FragmentSansFrontieres) getActivity().getSupportFragmentManager().findFragmentByTag(FragmentSansFrontieres.TAG);
         this.presenter = frag.presenter;
 
         searchResults.setLayoutManager(new LinearLayoutManager(getActivity()));
-        searchResults.setAdapter(new SearchResultsAdapter(this));
+        Log.d(TAG, "onCreateView: savedInstanceSTate: " + savedInstanceState);
+        Log.d(TAG, "onCreateView: frag results: " + frag.results);
+        if (savedInstanceState != null && frag.results != null) {
+            if (frag.results.count <= 0) {
+                noResults.setVisibility(View.VISIBLE);
+            } else {
+                SearchResultsAdapter adapter = new SearchResultsAdapter(this);
+                adapter.results = frag.results;
+                searchResults.setAdapter(adapter);
+                searchResults.getAdapter().notifyDataSetChanged();
+            }
+        } else
+            searchResults.setAdapter(new SearchResultsAdapter(this));
+
         return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        search.clearFocus();
         // Setup an observable that will fire off after 500ms of no user input
         searchObservable = RxTextView.textChangeEvents(search)
                 .skip(1) // Event fires off immediately, so skip that unnecessary hit
@@ -70,19 +89,29 @@ public class HomeFragment extends Fragment implements SearchResultsAdapter.OnRes
                 .subscribe(new Action1<TextViewTextChangeEvent>() {
                     @Override
                     public void call(TextViewTextChangeEvent textViewTextChangeEvent) {
+                        progress.setVisibility(View.VISIBLE);
+                        noResults.setVisibility(View.GONE);
+                        frag.results = null;
                         presenter.searchWeatherForecast(textViewTextChangeEvent.view().getText().toString(),
                                 new Callback<WeatherApiBaseModel>() {
-                                    @Override public void onResponse(Call<WeatherApiBaseModel> call, Response<WeatherApiBaseModel> response) {
+                                    @Override
+                                    public void onResponse(Call<WeatherApiBaseModel> call, Response<WeatherApiBaseModel> response) {
                                         if (response.isSuccessful()) {
-                                            Log.d(TAG, "onResponse: RESPONSE SUCCESSFUL");
+                                            progress.setVisibility(View.GONE);
+
+                                            // Save our results
+                                            frag.results = response.body().query;
+                                            if (frag.results.count <= 0) {
+                                                noResults.setVisibility(View.VISIBLE);
+                                            }
                                             // Update the adapter
-                                            Log.d(TAG, "onResponse: body: " + response.body().toString());
-                                                ((SearchResultsAdapter) searchResults.getAdapter()).results = response.body().query;
-                                                searchResults.getAdapter().notifyDataSetChanged();
-                                                content.setVisibility(View.VISIBLE);
+                                            ((SearchResultsAdapter) searchResults.getAdapter()).results = response.body().query;
+                                            searchResults.getAdapter().notifyDataSetChanged();
                                         }
                                     }
-                                    @Override public void onFailure(Call<WeatherApiBaseModel> call, Throwable t) {
+
+                                    @Override
+                                    public void onFailure(Call<WeatherApiBaseModel> call, Throwable t) {
                                         Toast.makeText(getActivity(), "There was a problem hitting the server, check your network connection and try again!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
